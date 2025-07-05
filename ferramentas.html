@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ferramentas - Portfólio Futurista</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="splash-screen">
+        <div class="splash-content">
+            <h1 class="splash-title">FERRAMENTAS</h1>
+            <p class="splash-subtitle">CARREGANDO EFEITOS</p>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-animation"></div>
+
+    <div class="main-content">
+        <header class="header">
+            <div class="container">
+                <h1 class="main-title">FERRAMENTAS</h1>
+                <p class="subtitle">EFEITOS E ANIMAÇÕES FUTURISTAS</p>
+            </div>
+        </header>
+
+        <section class="tools-section">
+            <div class="container">
+                <div class="tools-grid scroll-animate">
+                </div>
+            </div>
+        </section>
+
+        <nav class="back-nav">
+            <div class="container">
+                <a href="inicio.html" class="btn">← VOLTAR AO INÍCIO</a>
+            </div>
+        </nav>
+    </div>
+
+    <style>
+        .tools-section {
+            padding: 4rem 0;
+        }
+
+        .back-nav {
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .back-nav .btn {
+            background: var(--gradient-card);
+            border: 2px solid var(--neon-blue);
+            color: var(--text-primary);
+        }
+
+        .back-nav .btn:hover {
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-cyan));
+            color: var(--bg-primary);
+        }
+
+        .demo-element {
+            padding: 2rem;
+            background: var(--gradient-card);
+            border: 2px solid var(--neon-blue);
+            border-radius: 10px;
+            text-align: center;
+            color: var(--text-primary);
+            margin: 2rem 0;
+        }
+
+        .demo-element.glow {
+            animation: demoGlow 2s ease-in-out infinite alternate;
+        }
+
+        .demo-element.pulse {
+            animation: demoPulse 1s ease-in-out infinite;
+        }
+
+        .demo-element.floating {
+            animation: demoFloat 3s ease-in-out infinite;
+        }
+
+        .demo-element.glitch {
+            animation: demoGlitch 3s ease-in-out infinite;
+        }
+
+        .demo-element.neonBorder {
+            border: 2px solid var(--neon-cyan);
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .demo-element.morph {
+            animation: demoMorph 2s ease-in-out infinite alternate;
+        }
+
+        .demo-element.hologram {
+            background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            animation: demoHologram 2s linear infinite;
+        }
+
+        .demo-element.matrix {
+            background: var(--bg-primary);
+            color: var(--neon-cyan);
+            font-family: monospace;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .demo-element.matrix::before {
+            content: "10010110101010110010110101010110010110101010110010110101";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            animation: matrixScroll 3s linear infinite;
+        }
+
+        @keyframes demoGlow {
+            0% { box-shadow: 0 0 20px var(--neon-blue); }
+            100% { box-shadow: 0 0 40px var(--neon-blue), 0 0 60px var(--neon-blue); }
+        }
+
+        @keyframes demoPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes demoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes demoGlitch {
+            0%, 100% { transform: translateX(0); }
+            10% { transform: translateX(-5px); }
+            20% { transform: translateX(5px); }
+            30% { transform: translateX(-3px); }
+            40% { transform: translateX(3px); }
+            50% { transform: translateX(-2px); }
+            60% { transform: translateX(2px); }
+            70% { transform: translateX(-1px); }
+            80% { transform: translateX(1px); }
+            90% { transform: translateX(0); }
+        }
+
+        @keyframes demoMorph {
+            0% { border-radius: 10px; }
+            50% { border-radius: 50px; }
+            100% { border-radius: 10px; }
+        }
+
+        @keyframes demoHologram {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        @keyframes matrixScroll {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 600ms linear;
+            background-color: rgba(0, 212, 255, 0.6);
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+    </style>
+
+    <script src="main.js"></script>
+</body>
+</html>

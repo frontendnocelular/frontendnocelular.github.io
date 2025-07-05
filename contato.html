@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - Portfólio Futurista</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="splash-screen">
+        <div class="splash-content">
+            <h1 class="splash-title">CONTATO</h1>
+            <p class="splash-subtitle">CONECTANDO SISTEMAS</p>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-animation"></div>
+
+    <div class="main-content">
+        <header class="header">
+            <div class="container">
+                <h1 class="main-title">CONTATO</h1>
+                <p class="subtitle">VAMOS CONECTAR E CRIAR ALGO INCRÍVEL</p>
+            </div>
+        </header>
+
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-buttons scroll-animate">
+                    <a href="link1" class="contact-btn">
+                        <div class="contact-icon">📱</div>
+                        <div class="contact-text">WHATSAPP</div>
+                    </a>
+                    <a href="link2" class="contact-btn">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-text">EMAIL</div>
+                    </a>
+                    <a href="link3" class="contact-btn">
+                        <div class="contact-icon">📸</div>
+                        <div class="contact-text">INSTAGRAM</div>
+                    </a>
+                    <a href="link4" class="contact-btn">
+                        <div class="contact-icon">🎵</div>
+                        <div class="contact-text">TIKTOK</div>
+                    </a>
+                    <a href="link5" class="contact-btn">
+                        <div class="contact-icon">💻</div>
+                        <div class="contact-text">GITHUB</div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <nav class="back-nav">
+            <div class="container">
+                <a href="inicio.html" class="btn">← VOLTAR AO INÍCIO</a>
+            </div>
+        </nav>
+    </div>
+
+    <style>
+        .contact-section {
+            padding: 4rem 0;
+        }
+
+        .back-nav {
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .back-nav .btn {
+            background: var(--gradient-card);
+            border: 2px solid var(--neon-blue);
+            color: var(--text-primary);
+        }
+
+        .back-nav .btn:hover {
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-cyan));
+            color: var(--bg-primary);
+        }
+
+        .contact-btn {
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-btn > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple 600ms linear;
+            background-color: rgba(0, 212, 255, 0.6);
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .contact-buttons {
+                gap: 1.5rem;
+            }
+        }
+    </style>
+
+    <script src="main.js"></script>
+</body>
+</html>
