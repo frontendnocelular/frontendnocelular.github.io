@@ -3,22 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Uma proposta especial de casamento para Gabi">
     <title>Para Você, Gabi ❤️</title>
     <style>
+        /* Reset e configurações globais */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-pink: #ff66cc;
+            --secondary-pink: #ff99dd;
+            --light-pink: rgba(255, 102, 204, 0.6);
+            --green-yes: #00ff88;
+            --red-no: #ff4444;
+            --text-white: #ffffff;
+            --text-shadow: 0 0 20px rgba(255, 102, 204, 0.8);
+            --transition-smooth: all 0.3s ease;
+        }
+
+        /* Suporte para usuários que preferem movimento reduzido */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
         body {
-            background: #000;
+            background: linear-gradient(135deg, #000428 0%, #004e92 100%);
             overflow: hidden;
             font-family: 'Arial', sans-serif;
             height: 100vh;
             position: relative;
+            color: var(--text-white);
         }
 
+        /* Navegação por teclado - skip link */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--primary-pink);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            z-index: 1000;
+        }
+
+        .skip-link:focus {
+            top: 6px;
+        }
+
+        /* Estrelas de fundo */
         .stars {
             position: fixed;
             top: 0;
@@ -35,7 +77,7 @@
             height: 2px;
             background: white;
             border-radius: 50%;
-            animation: twinkle 2s infinite;
+            animation: twinkle 2s infinite ease-in-out;
         }
 
         @keyframes twinkle {
@@ -43,13 +85,14 @@
             50% { opacity: 1; }
         }
 
+        /* Container da animação principal */
         .show-container {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 500px;
-            height: 500px;
+            width: min(500px, 90vw);
+            height: min(500px, 90vw);
             z-index: 2;
         }
 
@@ -57,10 +100,10 @@
             position: absolute;
             width: 4px;
             height: 4px;
-            background: radial-gradient(circle, #ff0066, #ff3388);
+            background: radial-gradient(circle, var(--primary-pink), #ff3388);
             border-radius: 50%;
-            box-shadow: 0 0 8px #ff0066, 0 0 15px #ff0066;
-            animation: sparkle 0.5s infinite alternate;
+            box-shadow: 0 0 8px var(--primary-pink), 0 0 15px var(--primary-pink);
+            animation: sparkle 0.5s infinite alternate ease-in-out;
         }
 
         @keyframes sparkle {
@@ -87,93 +130,92 @@
             }
         }
 
+        /* Container da proposta */
         .proposal-container {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            color: white;
+            color: var(--text-white);
             z-index: 3;
             opacity: 0;
             transition: all 0.8s ease;
+            max-width: 90vw;
+            padding: 20px;
         }
 
         .proposal-container.show {
             opacity: 1;
         }
 
-        .proposal-image {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 30px;
-            border-radius: 50%;
-            box-shadow: 0 0 40px rgba(255, 102, 204, 0.6);
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
         .proposal-text {
-            font-size: 2.5rem;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
             font-weight: bold;
             margin-bottom: 40px;
-            text-shadow: 0 0 20px rgba(255, 102, 204, 0.8);
+            text-shadow: var(--text-shadow);
             animation: glow 2s ease-in-out infinite alternate;
         }
 
         @keyframes glow {
-            from { text-shadow: 0 0 20px rgba(255, 102, 204, 0.8); }
-            to { text-shadow: 0 0 30px rgba(255, 102, 204, 1), 0 0 40px rgba(255, 102, 204, 0.8); }
+            from { text-shadow: var(--text-shadow); }
+            to { text-shadow: 0 0 30px var(--primary-pink), 0 0 40px var(--light-pink); }
         }
 
+        /* Botões */
         .buttons {
             display: flex;
-            gap: 40px;
+            gap: clamp(20px, 5vw, 40px);
             justify-content: center;
             margin-top: 30px;
+            flex-wrap: wrap;
         }
 
         .btn {
             padding: 15px 40px;
-            font-size: 1.5rem;
+            font-size: clamp(1rem, 3vw, 1.5rem);
             font-weight: bold;
-            border: none;
+            border: 3px solid transparent;
             border-radius: 25px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition-smooth);
             text-transform: uppercase;
             letter-spacing: 2px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn-yes {
-            background: linear-gradient(45deg, #00ff88, #00cc66);
-            color: white;
-        }
-
-        .btn-yes:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.4);
-        }
-
-        .btn-no {
-            background: linear-gradient(45deg, #ff4444, #cc0000);
-            color: white;
             position: relative;
-            transition: all 0.3s ease;
             min-width: 120px;
             min-height: 60px;
         }
 
-        .btn-no:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(255, 68, 68, 0.4);
+        .btn:focus {
+            outline: 3px solid var(--text-white);
+            outline-offset: 2px;
         }
 
+        .btn-yes {
+            background: linear-gradient(45deg, var(--green-yes), #00cc66);
+            color: var(--text-white);
+        }
+
+        .btn-yes:hover, .btn-yes:focus {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.4);
+            border-color: var(--green-yes);
+        }
+
+        .btn-no {
+            background: linear-gradient(45deg, var(--red-no), #cc0000);
+            color: var(--text-white);
+            transition: var(--transition-smooth);
+        }
+
+        .btn-no:hover, .btn-no:focus {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 68, 68, 0.4);
+            border-color: var(--red-no);
+        }
+
+        /* Chuva de corações */
         .heart-rain {
             position: fixed;
             top: 0;
@@ -187,7 +229,7 @@
         .falling-heart {
             position: absolute;
             font-size: 20px;
-            color: #ff66cc;
+            color: var(--primary-pink);
             animation: fall linear infinite;
         }
 
@@ -202,17 +244,20 @@
             }
         }
 
+        /* Mensagem final */
         .final-message {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
-            color: white;
+            color: var(--text-white);
             z-index: 5;
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
+            max-width: 90vw;
+            padding: 20px;
         }
 
         .final-message.show {
@@ -222,25 +267,11 @@
             animation: fadeInUp 1s ease;
         }
 
-        .instagram-btn {
-            background: linear-gradient(45deg, #ff66cc, #ff99dd);
-            color: white;
-            padding: 20px 50px;
-            font-size: 1.3rem;
-            font-weight: bold;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 30px;
-            transition: all 0.3s ease;
-            box-shadow: 0 15px 40px rgba(255, 102, 204, 0.3);
-        }
-
-        .instagram-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px rgba(255, 102, 204, 0.5);
+        .final-message h2 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 30px;
+            color: var(--primary-pink);
+            text-shadow: var(--text-shadow);
         }
 
         @keyframes fadeInUp {
@@ -254,13 +285,12 @@
             }
         }
 
-
-
+        /* Animações de explosão */
         .explosion {
             position: absolute;
             width: 20px;
             height: 20px;
-            background: radial-gradient(circle, #ff66cc, transparent);
+            background: radial-gradient(circle, var(--primary-pink), transparent);
             border-radius: 50%;
             animation: explode 0.6s ease-out forwards;
         }
@@ -294,60 +324,148 @@
                 transform: scale(0);
             }
         }
+
+        /* Responsividade adicional */
+        @media (max-width: 768px) {
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* Acessibilidade para alto contraste */
+        @media (prefers-contrast: high) {
+            .btn {
+                border: 2px solid var(--text-white);
+            }
+            
+            .star {
+                background: var(--text-white);
+                box-shadow: 0 0 5px var(--text-white);
+            }
+        }
+
+        /* Loading indicator */
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: var(--text-white);
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+
+        /* Hidden class para screen readers */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
     </style>
 </head>
 <body>
-    <div class="stars"></div>
+    <!-- Skip link para navegação por teclado -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
     
-    <div class="show-container" id="showContainer"></div>
+    <!-- Indicador de carregamento -->
+    <div class="loading" id="loading" role="status" aria-live="polite">
+        <span class="sr-only">Carregando animação romântica...</span>
+        ✨ Preparando uma surpresa especial...
+    </div>
     
-    <div class="proposal-container" id="proposalContainer">
-        <div class="proposal-text">Aceitas casar comigo, Gabi?</div>
-        <div class="buttons">
-            <button class="btn btn-yes" id="yesBtn">Sim</button>
-            <button class="btn btn-no" id="noBtn">Não</button>
-        </div>
-    </div>
+    <!-- Fundo de estrelas -->
+    <div class="stars" aria-hidden="true"></div>
+    
+    <!-- Container da animação principal -->
+    <div class="show-container" id="showContainer" aria-hidden="true"></div>
+    
+    <!-- Conteúdo principal -->
+    <main id="main-content">
+        <!-- Container da proposta -->
+        <section class="proposal-container" id="proposalContainer" role="main" aria-labelledby="proposal-text">
+            <h1 class="proposal-text" id="proposal-text">Aceitas casar comigo, Gabi?</h1>
+            <div class="buttons" role="group" aria-labelledby="proposal-text">
+                <button class="btn btn-yes" id="yesBtn" aria-describedby="yes-description">
+                    Sim
+                    <span class="sr-only" id="yes-description">Aceitar a proposta de casamento</span>
+                </button>
+                <button class="btn btn-no" id="noBtn" aria-describedby="no-description">
+                    Não
+                    <span class="sr-only" id="no-description">Recusar a proposta (mas o botão vai fugir!)</span>
+                </button>
+            </div>
+        </section>
 
-    <div class="heart-rain" id="heartRain"></div>
+        <!-- Chuva de corações -->
+        <div class="heart-rain" id="heartRain" aria-hidden="true"></div>
 
-    <div class="final-message" id="finalMessage">
-        <h2 style="font-size: 2.5rem; margin-bottom: 30px; color: #ff66cc;">Sabia que você ia dizer sim! 💕</h2>
-        <a href="g" class="card" target="_blank">
-            .
-        </a>
-    </div>
+        <!-- Mensagem final -->
+        <section class="final-message" id="finalMessage" role="dialog" aria-labelledby="final-title" aria-hidden="true">
+            <h2 id="final-title">Sabia que você ia dizer sim! 💕</h2>
+            <p style="font-size: 1.2rem; margin-top: 20px; opacity: 0.9;">
+                Agora podemos começar nossa jornada juntos! ✨
+            </p>
+        </section>
+    </main>
 
     <script>
+        // Configurações de acessibilidade
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
+        // Função para criar estrelas
         function createStars() {
             const starsContainer = document.querySelector('.stars');
-            for (let i = 0; i < 100; i++) {
+            const starCount = prefersReducedMotion ? 20 : 100;
+            
+            for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 star.style.left = Math.random() * 100 + '%';
                 star.style.top = Math.random() * 100 + '%';
                 star.style.animationDelay = Math.random() * 2 + 's';
+                star.setAttribute('aria-hidden', 'true');
                 starsContainer.appendChild(star);
             }
         }
 
+        // Função para criar animação em espiral
         function createSwirl() {
             const container = document.getElementById('showContainer');
             const particles = [];
-            const numParticles = 60;
+            const numParticles = prefersReducedMotion ? 20 : 60;
             
             for (let i = 0; i < numParticles; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
+                particle.setAttribute('aria-hidden', 'true');
                 container.appendChild(particle);
                 particles.push(particle);
             }
 
+            if (prefersReducedMotion) {
+                // Animação simplificada para movimento reduzido
+                setTimeout(() => formHeart(particles), 1000);
+                return;
+            }
+
             let angle = 0;
-            let radius = 200;
-            let speed = 0.15;
-            let centerX = 250;
-            let centerY = 250;
+            let radius = Math.min(200, window.innerWidth * 0.2);
+            const speed = 0.15;
+            const centerX = container.offsetWidth / 2;
+            const centerY = container.offsetHeight / 2;
 
             function animateSwirl() {
                 particles.forEach((particle, index) => {
@@ -372,10 +490,12 @@
             animateSwirl();
         }
 
+        // Função para formar coração
         function formHeart(particles) {
-            const scale = 3;
-            const offsetX = 250;
-            const offsetY = 200;
+            const scale = Math.min(3, window.innerWidth / 200);
+            const container = document.getElementById('showContainer');
+            const offsetX = container.offsetWidth / 2;
+            const offsetY = container.offsetHeight / 2 - 50;
             
             particles.forEach((particle, index) => {
                 const t = (index / particles.length) * Math.PI * 2;
@@ -386,15 +506,18 @@
                 particle.style.left = x + 'px';
                 particle.style.top = y + 'px';
                 
-                setTimeout(() => {
-                    particle.classList.add('heart-float');
-                    particle.style.animationDelay = (index * 0.1) + 's';
-                }, 2000);
+                if (!prefersReducedMotion) {
+                    setTimeout(() => {
+                        particle.classList.add('heart-float');
+                        particle.style.animationDelay = (index * 0.1) + 's';
+                    }, 2000);
+                }
             });
 
-            setTimeout(() => explodeHeart(particles), 5000);
+            setTimeout(() => explodeHeart(particles), prefersReducedMotion ? 2000 : 5000);
         }
 
+        // Função para explodir coração
         function explodeHeart(particles) {
             particles.forEach(particle => {
                 const randomX = Math.random() * window.innerWidth;
@@ -407,15 +530,26 @@
             });
 
             setTimeout(() => {
-                document.getElementById('proposalContainer').classList.add('show');
+                // Remover loading e mostrar proposta
+                const loading = document.getElementById('loading');
+                loading.style.display = 'none';
+                
+                const proposalContainer = document.getElementById('proposalContainer');
+                proposalContainer.classList.add('show');
+                proposalContainer.setAttribute('aria-hidden', 'false');
+                
+                // Focar no primeiro botão para acessibilidade
+                document.getElementById('yesBtn').focus();
             }, 1000);
         }
 
+        // Função para criar chuva de corações
         function createHeartRain() {
             const heartRain = document.getElementById('heartRain');
             const hearts = ['💖', '💕', '💗', '💓', '💘', '💝', '💞', '💟'];
+            const heartCount = prefersReducedMotion ? 10 : 50;
             
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < heartCount; i++) {
                 setTimeout(() => {
                     const heart = document.createElement('div');
                     heart.className = 'falling-heart';
@@ -423,21 +557,24 @@
                     heart.style.left = Math.random() * 100 + '%';
                     heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
                     heart.style.animationDelay = Math.random() * 2 + 's';
+                    heart.setAttribute('aria-hidden', 'true');
                     heartRain.appendChild(heart);
 
                     setTimeout(() => {
                         heart.remove();
                     }, 5000);
-                }, i * 100);
+                }, i * (prefersReducedMotion ? 500 : 100));
             }
         }
 
+        // Função para explodir elemento
         function explodeElement(element) {
             const rect = element.getBoundingClientRect();
             const explosion = document.createElement('div');
             explosion.className = 'explosion';
             explosion.style.left = rect.left + rect.width / 2 + 'px';
             explosion.style.top = rect.top + rect.height / 2 + 'px';
+            explosion.setAttribute('aria-hidden', 'true');
             document.body.appendChild(explosion);
 
             setTimeout(() => {
@@ -447,24 +584,30 @@
             element.classList.add('hide-element');
         }
 
+        // Função para lidar com clique no "Sim"
         function handleYesClick() {
             const elements = document.querySelectorAll('.proposal-container > *');
             
             elements.forEach((element, index) => {
                 setTimeout(() => {
                     explodeElement(element);
-                }, index * 200);
+                }, index * (prefersReducedMotion ? 100 : 200));
             });
 
             setTimeout(() => {
-                document.getElementById('proposalContainer').style.display = 'none';
+                const proposalContainer = document.getElementById('proposalContainer');
+                proposalContainer.style.display = 'none';
+                proposalContainer.setAttribute('aria-hidden', 'true');
+                
                 createHeartRain();
+                
                 setTimeout(() => {
                     showFinalMessage();
                 }, 1000);
-            }, elements.length * 200 + 600);
+            }, elements.length * (prefersReducedMotion ? 100 : 200) + 600);
         }
 
+        // Função para mover botão "Não"
         function moveNoButton() {
             const button = document.getElementById('noBtn');
             const rect = button.getBoundingClientRect();
@@ -474,11 +617,11 @@
             const screenWidth = window.innerWidth;
             const screenHeight = window.innerHeight;
             
-            const maxX = screenWidth - buttonWidth - 10;
-            const maxY = screenHeight - buttonHeight - 10;
+            const maxX = screenWidth - buttonWidth - 20;
+            const maxY = screenHeight - buttonHeight - 20;
             
-            const randomX = Math.max(10, Math.min(maxX, Math.random() * maxX));
-            const randomY = Math.max(10, Math.min(maxY, Math.random() * maxY));
+            const randomX = Math.max(20, Math.min(maxX, Math.random() * maxX));
+            const randomY = Math.max(20, Math.min(maxY, Math.random() * maxY));
             
             button.style.position = 'fixed';
             button.style.left = randomX + 'px';
@@ -488,30 +631,79 @@
             const messages = ['Tem certeza?', 'Clica no sim!', 'Vai, clica no sim!', 'Não foge de mim!', 'Aceita logo!'];
             const randomMessage = messages[Math.floor(Math.random() * messages.length)];
             button.textContent = randomMessage;
+            
+            // Anunciar mudança para screen readers
+            const announcement = document.createElement('div');
+            announcement.className = 'sr-only';
+            announcement.setAttribute('aria-live', 'polite');
+            announcement.textContent = `O botão não fugiu para outro local! ${randomMessage}`;
+            document.body.appendChild(announcement);
+            
+            setTimeout(() => {
+                document.body.removeChild(announcement);
+            }, 1000);
         }
 
-        function handleNoClick(event) {
+        // Função para lidar com clique/hover no "Não"
+        function handleNoInteraction(event) {
             event.preventDefault();
-            moveNoButton();
+            if (!prefersReducedMotion) {
+                moveNoButton();
+            }
         }
 
-        function handleNoHover(event) {
-            event.preventDefault();
-            moveNoButton();
-        }
-
+        // Função para mostrar mensagem final
         function showFinalMessage() {
             const finalMessage = document.getElementById('finalMessage');
             finalMessage.classList.add('show');
+            finalMessage.setAttribute('aria-hidden', 'false');
+            
+            // Focar na mensagem final para leitores de tela
+            finalMessage.focus();
+            
+            // Anunciar a mensagem final
+            const announcement = document.createElement('div');
+            announcement.className = 'sr-only';
+            announcement.setAttribute('aria-live', 'assertive');
+            announcement.textContent = 'Parabéns! A proposta foi aceita!';
+            document.body.appendChild(announcement);
         }
 
-        createStars();
-        createSwirl();
+        // Função para lidar com navegação por teclado
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.target.click();
+            }
+        }
 
-        document.getElementById('yesBtn').addEventListener('click', handleYesClick);
-        document.getElementById('noBtn').addEventListener('click', handleNoClick);
-        document.getElementById('noBtn').addEventListener('mouseenter', handleNoHover);
-        document.getElementById('noBtn').addEventListener('touchstart', handleNoHover);
+        // Inicialização
+        function init() {
+            createStars();
+            
+            // Iniciar animação após um pequeno delay
+            setTimeout(() => {
+                createSwirl();
+            }, 500);
+
+            // Adicionar event listeners
+            const yesBtn = document.getElementById('yesBtn');
+            const noBtn = document.getElementById('noBtn');
+            
+            yesBtn.addEventListener('click', handleYesClick);
+            yesBtn.addEventListener('keypress', handleKeyPress);
+            
+            noBtn.addEventListener('click', handleNoInteraction);
+            noBtn.addEventListener('mouseenter', handleNoInteraction);
+            noBtn.addEventListener('touchstart', handleNoInteraction);
+            noBtn.addEventListener('keypress', handleKeyPress);
+        }
+
+        // Aguardar DOM carregar
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
     </script>
 </body>
 </html>
