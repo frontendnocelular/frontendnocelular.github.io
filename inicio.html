@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio Futurista</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="splash-screen">
+        <div class="splash-content">
+            <h1 class="splash-title">INICIALIZANDO</h1>
+            <p class="splash-subtitle">SISTEMA FUTURISTA</p>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-animation"></div>
+
+    <div class="main-content">
+        <section class="hero-section">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-text">
+                        <h1 class="hero-name">NUYZZE</h1>
+                        <p class="hero-tagline">FRONTEND NO CELULAR</p>
+                    </div>
+                    <div class="hero-image">
+                        <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&h=400&fit=crop&crop=face" alt="Perfil" class="profile-image">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <nav class="navigation">
+            <div class="container">
+                <div class="nav-grid">
+                    <a href="projetos.html" class="nav-card">
+                        <div class="nav-icon">🚀</div>
+                        <h3>PROJETOS</h3>
+                    </a>
+                    <a href="ferramentas.html" class="nav-card">
+                        <div class="nav-icon">🛠️</div>
+                        <h3>FERRAMENTAS</h3>
+                    </a>
+                    <a href="sobre.html" class="nav-card">
+                        <div class="nav-icon">👤</div>
+                        <h3>SOBRE</h3>
+                    </a>
+                    <a href="contato.html" class="nav-card">
+                        <div class="nav-icon">📞</div>
+                        <h3>CONTATO</h3>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <style>
+        .navigation {
+            padding: 4rem 0;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .nav-card {
+            background: var(--gradient-card);
+            border: 2px solid var(--neon-blue);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, var(--neon-blue), transparent);
+            animation: cardRotate 4s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-card::after {
+            content: '';
+            position: absolute;
+            inset: 2px;
+            background: var(--gradient-card);
+            border-radius: 13px;
+            z-index: 1;
+        }
+
+        .nav-card:hover::before {
+            opacity: 1;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .nav-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .nav-card h3 {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+    </style>
+
+    <script src="main.js"></script>
+</body>
+</html>

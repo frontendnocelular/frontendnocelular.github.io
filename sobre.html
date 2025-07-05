@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre - Portfólio Futurista</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="splash-screen">
+        <div class="splash-content">
+            <h1 class="splash-title">SOBRE MIM</h1>
+            <p class="splash-subtitle">CARREGANDO PERFIL</p>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-animation"></div>
+
+    <div class="main-content">
+        <header class="header">
+            <div class="container">
+                <h1 class="main-title">SOBRE MIM</h1>
+                <p class="subtitle">DESENVOLVEDOR FRONTEND FUTURISTA</p>
+            </div>
+        </header>
+
+        <section class="about-section">
+            <div class="container">
+                <div class="about-content scroll-animate">
+                    <p class="about-text">
+                        Sou um desenvolvedor frontend apaixonado por criar experiências digitais inovadoras e futuristas. 
+                        Especializado em desenvolvimento mobile, trabalho principalmente no celular, transformando ideias em 
+                        interfaces interativas e funcionais. Minha jornada na programação é marcada pela busca constante 
+                        por tecnologias emergentes e pela criação de soluções que transcendem as expectativas convencionais.
+                    </p>
+                    <p class="about-text">
+                        Com experiência em múltiplas linguagens e frameworks, desenvolvo desde aplicações web responsivas 
+                        até aplicativos mobile nativos. Minha abordagem combina criatividade com funcionalidade, sempre 
+                        priorizando a experiência do usuário e a performance otimizada. Cada projeto é uma oportunidade 
+                        de explorar novas possibilidades e empurrar os limites do que é possível no desenvolvimento frontend.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="skills-section">
+            <div class="container">
+                <h2 class="skills-title">SKILLS</h2>
+                <div class="skills-carousel">
+                    <div class="skills-track">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <nav class="back-nav">
+            <div class="container">
+                <a href="inicio.html" class="btn">← VOLTAR AO INÍCIO</a>
+            </div>
+        </nav>
+    </div>
+
+    <style>
+        .about-section {
+            padding: 4rem 0;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .back-nav {
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .back-nav .btn {
+            background: var(--gradient-card);
+            border: 2px solid var(--neon-blue);
+            color: var(--text-primary);
+        }
+
+        .back-nav .btn:hover {
+            background: linear-gradient(45deg, var(--neon-blue), var(--neon-cyan));
+            color: var(--bg-primary);
+        }
+
+        .skills-carousel {
+            cursor: grab;
+            user-select: none;
+        }
+
+        .skills-carousel:active {
+            cursor: grabbing;
+        }
+
+        .skills-carousel.active {
+            cursor: grabbing;
+        }
+    </style>
+
+    <script src="main.js"></script>
+</body>
+</html>
