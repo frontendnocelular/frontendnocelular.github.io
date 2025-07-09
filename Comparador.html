@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Quem não me segue de volta?</title>
+</head>
+<body>
+  <h2>Ver quem não te segue de volta</h2>
+  <p>Selecione os arquivos JSON exportados do Instagram:</p>
+
+  <label>following.json:
+    <input type="file" id="following" accept=".json">
+  </label><br><br>
+  <label>followers_1.json:
+    <input type="file" id="followers" accept=".json">
+  </label><br><br>
+
+  <button onclick="comparar()">Comparar</button>
+
+  <h3>Resultado:</h3>
+  <ul id="resultado"></ul>
+
+  <script>
+    let seguindo = [], seguidores = [];
+
+    function comparar() {
+      const resultado = document.getElementById('resultado');
+      resultado.innerHTML = '';
+
+      const naoSegueDeVolta = seguindo.filter(u => !seguidores.includes(u));
+      
+      naoSegueDeVolta.forEach(user => {
+        const li = document.createElement('li');
+        li.textContent = user;
+        resultado.appendChild(li);
+      });
+
+      if (naoSegueDeVolta.length === 0) {
+        resultado.innerHTML = '<li>Todos te seguem de volta!</li>';
+      } else {
+        resultado.innerHTML += `<br><b>Total:</b> ${naoSegueDeVolta.length}`;
+      }
+    }
+
+    document.getElementById('following').addEventListener('change', function(e) {
+      const reader = new FileReader();
+      reader.onload = function() {
+        const data = JSON.parse(reader.result);
+        seguindo = data.map(x => x.string_list_data[0].value.toLowerCase());
+      };
+      reader.readAsText(e.target.files[0]);
+    });
+
+    document.getElementById('followers').addEventListener('change', function(e) {
+      const reader = new FileReader();
+      reader.onload = function() {
+        const data = JSON.parse(reader.result);
+        seguidores = data.map(x => x.string_list_data[0].value.toLowerCase());
+      };
+      reader.readAsText(e.target.files[0]);
+    });
+  </script>
+</body>
+</html>
