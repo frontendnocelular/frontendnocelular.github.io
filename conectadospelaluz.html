@@ -309,31 +309,6 @@
       50% { box-shadow: 0 0 30px rgba(255, 64, 129, 1); }
     }
 
-    .carta-flutuante {
-      position: absolute;
-      bottom: 35%;
-      left: -60px;
-      font-size: clamp(2rem, 4vw, 3rem);
-      animation: flutuarCarta 15s linear infinite;
-      cursor: pointer;
-      z-index: 10;
-      filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
-      transition: transform 0.3s ease;
-    }
-
-    .carta-flutuante:hover {
-      transform: scale(1.2);
-      filter: drop-shadow(0 0 20px rgba(255,255,255,0.8));
-    }
-
-    @keyframes flutuarCarta {
-      0% { transform: translateX(0) translateY(0); }
-      25% { transform: translateX(25vw) translateY(-2vh); }
-      50% { transform: translateX(50vw) translateY(0); }
-      75% { transform: translateX(75vw) translateY(-1vh); }
-      100% { transform: translateX(120vw) translateY(0); }
-    }
-
     /* Modais responsivos */
     .modal {
       display: none;
@@ -442,10 +417,6 @@
         right: 10px;
       }
 
-      .carta-flutuante {
-        bottom: 30%;
-      }
-
       #frasesDexter {
         top: 65%;
         width: 95%;
@@ -507,16 +478,7 @@
   </div>
 
   <button id="btn-luz" class="botao-luz">💌 Enviar essa luz para alguém</button>
-
-  <div id="carta" class="carta-flutuante">📨</div>
-
   <canvas id="coracaoCanvas"></canvas>
-
-  <div id="caixaCarta" class="modal">
-    <span class="close-btn" id="closeCarta">&times;</span>
-    <h3>Mensagem do Mar</h3>
-    <p id="mensagemCarta">Você é minha luz, mesmo na minha escuridão.</p>
-  </div>
 
   <div id="mensagemLuz" class="modal">
     <span class="close-btn" id="closeLuz">&times;</span>
@@ -847,57 +809,6 @@
     // Iniciar frases após 3 segundos
     setTimeout(mostrarFrase, 3000);
 
-    // Sistema de carta flutuante
-    const carta = document.getElementById('carta');
-    const caixaCarta = document.getElementById('caixaCarta');
-    const mensagemCarta = document.getElementById('mensagemCarta');
-    const closeCarta = document.getElementById('closeCarta');
-
-    carta.addEventListener('click', () => {
-      // Parar animação da carta
-      carta.style.animation = 'none';
-      
-      // Verificar se há mensagem salva
-      let mensagemSalva = null;
-      try {
-        mensagemSalva = JSON.parse(localStorage.getItem("mensagemAmor"));
-      } catch (e) {
-        mensagemSalva = null;
-      }
-      
-      let novaMensagem = mensagemSalva?.texto;
-
-      if (!mensagemSalva || !novaMensagem) {
-        novaMensagem = prompt("Escreva a mensagem que quer deixar nessa carta:");
-        if (novaMensagem) {
-          try {
-            localStorage.setItem("mensagemAmor", JSON.stringify({
-              texto: novaMensagem,
-              data: new Date().toISOString()
-            }));
-          } catch (e) {
-            console.log('Não foi possível salvar a mensagem');
-          }
-        }
-      }
-
-      mensagemCarta.innerText = novaMensagem || "Você é minha luz, mesmo na minha escuridão.";
-      caixaCarta.style.display = "block";
-      
-      // Reiniciar animação da carta após fechar
-      setTimeout(() => {
-        carta.style.animation = 'flutuarCarta 15s linear infinite';
-      }, 30000);
-    });
-
-    closeCarta.addEventListener('click', () => {
-      caixaCarta.classList.add('close');
-      setTimeout(() => {
-        caixaCarta.style.display = "none";
-        caixaCarta.classList.remove('close');
-      }, 600);
-    });
-
     // Sistema de envio de luz
     const canvasC = document.getElementById('coracaoCanvas');
     const ctxC = canvasC.getContext('2d');
@@ -1021,9 +932,6 @@
 
     // Fechar modais clicando fora
     document.addEventListener('click', (e) => {
-      if (e.target === caixaCarta) {
-        closeCarta.click();
-      }
       if (e.target === mensagemLuz) {
         closeLuz.click();
       }
@@ -1033,7 +941,6 @@
     document.addEventListener('keydown', (e) => {
       switch(e.key) {
         case 'Escape':
-          if (caixaCarta.style.display === 'block') closeCarta.click();
           if (mensagemLuz.style.display === 'block') closeLuz.click();
           break;
         case ' ':
