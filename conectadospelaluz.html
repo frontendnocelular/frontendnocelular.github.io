@@ -56,10 +56,12 @@
       bottom: 0;
       width: 100%;
       height: 40vh;
+      overflow: hidden;
       background: linear-gradient(to top, #061d2e 0%, rgba(6, 29, 46, 0.8) 50%, transparent 100%);
-      animation: ondas 4s infinite ease-in-out;
       z-index: 1;
     }
+    .ondas { position:absolute; top:0; left:0; width:200%; height:100%; animation: waveMove 10s linear infinite; }
+    @keyframes waveMove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
     .mar::before {
       content: "";
@@ -144,7 +146,7 @@
       width: clamp(60px, 10vw, 80px);
       height: clamp(38px, 6vw, 50px);
       margin-left: calc(-1 * clamp(30px, 5vw, 40px));
-      animation: flutuar 3s infinite ease-in-out;
+      animation: barcoEntrada 3s ease-out forwards, flutuar 3s infinite ease-in-out 3s;
       z-index: 3;
       cursor: pointer;
     }
@@ -180,7 +182,7 @@
       background: linear-gradient(to bottom, #fff, #e6e6e6);
       border-radius: 5px;
       transform: translateX(-50%);
-      animation: respirar 2s infinite ease-in-out;
+      animation: bonecoEntrada 3s ease-out forwards, respirar 2s infinite ease-in-out 3s;
     }
 
     .boneco::before {
@@ -203,6 +205,16 @@
     @keyframes respirar {
       0%, 100% { transform: translateX(-50%) scale(1); }
       50% { transform: translateX(-50%) scale(1.05); }
+    }
+
+    @keyframes barcoEntrada {
+      0% { transform: translateX(-120vw); }
+      100% { transform: translateX(0); }
+    }
+
+    @keyframes bonecoEntrada {
+      0% { opacity:0; transform: translateX(-50%) translateY(20px); }
+      100% { opacity:1; transform: translateX(-50%) translateY(0); }
     }
 
     .reflexo-lua {
@@ -463,7 +475,11 @@
   
   <div class="lua" id="lua"></div>
   <div class="reflexo-lua"></div>
-  <div class="mar"></div>
+  <div class="mar">
+    <svg class="ondas" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M0 60 C 300 20 900 100 1200 60 V120 H0 Z" fill="#0b2a3d"/>
+    </svg>
+  </div>
 
   <div class="barco" id="barco">
     <div class="boneco"></div>
@@ -472,7 +488,6 @@
   <canvas class="estrelas" id="estrelas"></canvas>
 
   <div class="btn-controls">
-    <button class="btn" id="btn-audio">🔈</button>
     <button class="btn" id="btn-fullscreen">⛶</button>
     <button class="btn" id="btn-pause">⏸️</button>
   </div>
@@ -485,10 +500,6 @@
     <h3>Luz Enviada</h3>
     <p id="textoLuz">Essa luz é para você, <strong>alguém especial</strong></p>
   </div>
-
-  <audio id="audio-mar" loop>
-    <source src="https://cdn.pixabay.com/download/audio/2021/08/08/audio_548f1cf74f.mp3?filename=mar-calmo.wav" type="audio/mpeg">
-  </audio>
 
   <script>
     // Cursor personalizado
@@ -525,22 +536,6 @@
       setTimeout(() => {
         wave.remove();
       }, 600);
-    });
-
-    // Controles de áudio
-    const audio = document.getElementById('audio-mar');
-    const btnAudio = document.getElementById('btn-audio');
-    let tocando = false;
-
-    btnAudio.addEventListener('click', () => {
-      if (tocando) {
-        audio.pause();
-        btnAudio.textContent = "🔈";
-      } else {
-        audio.play().catch(e => console.log('Erro ao reproduzir áudio:', e));
-        btnAudio.textContent = "🔊";
-      }
-      tocando = !tocando;
     });
 
     // Fullscreen
@@ -947,10 +942,6 @@
           e.preventDefault();
           btnPause.click();
           break;
-        case 'm':
-        case 'M':
-          btnAudio.click();
-          break;
         case 'f':
         case 'F':
           btnFullscreen.click();
@@ -1012,54 +1003,6 @@
       lastClickTime = now;
     });
 
-    // Inicialização do áudio com interação do usuário
-    let audioIniciado = false;
-    
-    function iniciarAudio() {
-      if (!audioIniciado) {
-        audio.play().catch(e => console.log('Áudio será reproduzido após interação'));
-        audioIniciado = true;
-        btnAudio.textContent = "🔊";
-        tocando = true;
-      }
-    }
-
-    // Tentar iniciar áudio na primeira interação
-    ['click', 'touchstart', 'keydown'].forEach(event => {
-      document.addEventListener(event, iniciarAudio, { once: true });
-    });
-
-    // Salvar configurações
-    function salvarConfiguracao() {
-      try {
-        localStorage.setItem('dexterConfig', JSON.stringify({
-          audioLigado: tocando,
-          ultimaVisita: new Date().toISOString()
-        }));
-      } catch (e) {
-        console.log('Não foi possível salvar configurações');
-      }
-    }
-
-    // Carregar configurações
-    function carregarConfiguracao() {
-      try {
-        const config = JSON.parse(localStorage.getItem('dexterConfig'));
-        if (config && config.audioLigado && !tocando) {
-          // Não iniciar áudio automaticamente por políticas do navegador
-          // Apenas manter o estado visual
-        }
-      } catch (e) {
-        console.log('Não foi possível carregar configurações');
-      }
-    }
-
-    // Salvar configurações ao sair
-    window.addEventListener('beforeunload', salvarConfiguracao);
-
-    // Carregar configurações na inicialização
-    carregarConfiguracao();
-
     // Animação de entrada suave
     document.body.style.opacity = '0';
     window.addEventListener('load', () => {
@@ -1068,31 +1011,7 @@
     });
 
     // Otimização de performance
-    let isVisible = true;
-    
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        isVisible = false;
-        // Pausar animações custosas quando a página não está visível
-        if (tocando) {
-          audio.pause();
-        }
-      } else {
-        isVisible = true;
-        // Retomar animações
-        if (tocando) {
-          audio.play().catch(e => console.log('Erro ao retomar áudio'));
-        }
-      }
-    });
-
-    console.log('🌙 Conectados pela Luz - Dexter Enhanced');
-    console.log('⌨️  Atalhos de teclado:');
-    console.log('   Espaço: Pausar/Continuar');
-    console.log('   M: Áudio On/Off');
-    console.log('   F: Tela cheia');
-    console.log('   L: Enviar luz');
-    console.log('   ESC: Fechar modais');
+    document.addEventListener('visibilitychange', () => {});
   </script>
 </body>
 </html>
