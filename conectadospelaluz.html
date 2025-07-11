@@ -1,4 +1,4 @@
-THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
@@ -217,20 +217,18 @@ THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
       100% { opacity:1; transform: translateX(-50%) translateY(0); }
     }
 
-    .reflexo-lua {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: clamp(20px, 3vw, 30px);
-      height: 35vh;
-      margin-left: calc(-1 * clamp(10px, 1.5vw, 15px));
-      background: linear-gradient(to bottom, 
-                  rgba(255,255,255,0.6) 0%,
-                  rgba(255,255,255,0.3) 30%,
-                  rgba(255,255,255,0.1) 60%,
-                  transparent 100%);
-      animation: reflexoLua 4s infinite ease-in-out;
-      z-index: 2;
+    .reflexo-lua{
+      position:absolute;
+      bottom:0;
+      left:50%;
+      width:clamp(40px,6vw,80px);
+      height:35vh;
+      margin-left:calc(-0.5*clamp(40px,6vw,80px));
+      background:linear-gradient(to bottom,rgba(255,255,255,.55)0%,rgba(255,255,255,.25)25%,rgba(255,255,255,.1)55%,transparent 100%);
+      filter:blur(1px);
+      animation:reflexoLua 4s infinite ease-in-out;
+      z-index:2;
+      pointer-events:none;
     }
 
     @keyframes reflexoLua {
@@ -267,14 +265,7 @@ THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
     }
 
     /* Botões responsivos */
-    .btn-controls {
-      position: fixed;
-      display: flex;
-      gap: 10px;
-      top: 20px;
-      right: 20px;
-      z-index: 100;
-    }
+    .btn-controls{position:fixed;display:flex;gap:10px;top:20px;right:20px;z-index:100;opacity:1;pointer-events:auto;}
 
     .btn {
       padding: clamp(8px, 2vw, 12px);
@@ -477,7 +468,7 @@ THIS SHOULD BE A LINTER ERROR<!DOCTYPE html>
   <div class="reflexo-lua"></div>
   <div class="mar">
     <svg class="ondas" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-      <path d="M0 60 C 300 20 900 100 1200 60 V120 H0 Z" fill="#0b2a3d"/>
+      <path d="M0 50 C 200 80 400 20 600 50 C 800 80 1000 20 1200 50 V120 H0 Z" fill="#0b2a3d"/>
     </svg>
   </div>
 
