@@ -4,7 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Conectados pela Luz</title>
+  <meta name="description" content="Uma experiência interativa visual e sonora - Conectados pela Luz">
   <style>
+    :root {
+      --primary-color: #0d1b2a;
+      --secondary-color: #ff4081;
+      --accent-color: #fff;
+      --water-color: #061d2e;
+      --moon-size: clamp(80px, 12vw, 120px);
+      --boat-size: clamp(60px, 10vw, 80px);
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -12,16 +22,17 @@
     }
 
     body {
-      background: radial-gradient(circle at center, #0d1b2a 0%, #000 100%);
+      background: radial-gradient(circle at center, var(--primary-color) 0%, #000 100%);
       overflow: hidden;
       height: 100vh;
       font-family: 'Georgia', serif;
-      color: #fff;
+      color: var(--accent-color);
       position: relative;
       cursor: none;
+      user-select: none;
     }
 
-    /* Cursor personalizado */
+    /* Cursor personalizado otimizado */
     .cursor {
       position: fixed;
       width: 20px;
@@ -30,35 +41,40 @@
       border-radius: 50%;
       pointer-events: none;
       z-index: 9999;
-      transition: transform 0.1s ease;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease;
+      will-change: transform;
     }
 
     .cursor.clicked {
-      transform: scale(1.5);
+      transform: translate(-50%, -50%) scale(1.5);
     }
 
-    /* Gradiente dinâmico de fundo */
+    /* Gradiente dinâmico otimizado */
     .background-gradient {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+      background: radial-gradient(circle at 50% 50%, 
                   rgba(13, 27, 42, 0.9) 0%, 
                   rgba(0, 0, 0, 1) 70%);
       z-index: -2;
-      transition: all 0.3s ease;
+      transition: background 0.3s ease;
+      will-change: background;
     }
 
+    /* Mar com animação otimizada */
     .mar {
       position: absolute;
       bottom: 0;
       width: 100%;
       height: 40vh;
-      background: linear-gradient(to top, #061d2e 0%, rgba(6, 29, 46, 0.8) 50%, transparent 100%);
+      background: linear-gradient(to top, var(--water-color) 0%, rgba(6, 29, 46, 0.8) 50%, transparent 100%);
       animation: ondas 4s infinite ease-in-out;
       z-index: 1;
+      will-change: transform;
     }
 
     .mar::before {
@@ -70,6 +86,7 @@
       height: 100%;
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
       animation: reflexoAgua 6s infinite ease-in-out;
+      will-change: transform;
     }
 
     @keyframes ondas {
@@ -82,13 +99,14 @@
       50% { transform: translateX(100%); }
     }
 
+    /* Lua otimizada */
     .lua {
       position: absolute;
       top: 10vh;
       left: 50%;
-      width: clamp(80px, 12vw, 120px);
-      height: clamp(80px, 12vw, 120px);
-      margin-left: calc(-1 * clamp(40px, 6vw, 60px));
+      width: var(--moon-size);
+      height: var(--moon-size);
+      margin-left: calc(-0.5 * var(--moon-size));
       background: radial-gradient(circle at 30% 30%, #fff, #e6e6e6, #ccc);
       border-radius: 50%;
       box-shadow: 0 0 clamp(20px, 4vw, 40px) rgba(255,255,255,0.8),
@@ -97,6 +115,12 @@
       animation: aparecerLua 3s forwards ease-in, pulsarLua 8s infinite ease-in-out 3s;
       cursor: pointer;
       z-index: 5;
+      transition: transform 0.3s ease;
+      will-change: transform, box-shadow;
+    }
+
+    .lua:hover {
+      transform: scale(1.05);
     }
 
     .lua::before {
@@ -137,16 +161,23 @@
       }
     }
 
+    /* Barco otimizado */
     .barco {
       position: absolute;
       bottom: 20vh;
       left: 50%;
-      width: clamp(60px, 10vw, 80px);
-      height: clamp(38px, 6vw, 50px);
-      margin-left: calc(-1 * clamp(30px, 5vw, 40px));
+      width: var(--boat-size);
+      height: calc(var(--boat-size) * 0.625);
+      margin-left: calc(-0.5 * var(--boat-size));
       animation: flutuar 3s infinite ease-in-out;
       z-index: 3;
       cursor: pointer;
+      transition: transform 0.3s ease;
+      will-change: transform;
+    }
+
+    .barco:hover {
+      transform: scale(1.1);
     }
 
     .barco::before {
@@ -181,6 +212,7 @@
       border-radius: 5px;
       transform: translateX(-50%);
       animation: respirar 2s infinite ease-in-out;
+      will-change: transform;
     }
 
     .boneco::before {
@@ -205,13 +237,14 @@
       50% { transform: translateX(-50%) scale(1.05); }
     }
 
+    /* Reflexo da lua otimizado */
     .reflexo-lua {
       position: absolute;
       bottom: 0;
       left: 50%;
       width: clamp(20px, 3vw, 30px);
       height: 35vh;
-      margin-left: calc(-1 * clamp(10px, 1.5vw, 15px));
+      margin-left: calc(-0.5 * clamp(20px, 3vw, 30px));
       background: linear-gradient(to bottom, 
                   rgba(255,255,255,0.6) 0%,
                   rgba(255,255,255,0.3) 30%,
@@ -219,13 +252,15 @@
                   transparent 100%);
       animation: reflexoLua 4s infinite ease-in-out;
       z-index: 2;
+      will-change: opacity, transform;
     }
 
     @keyframes reflexoLua {
-      0%, 100% { opacity: 0.8; transform: translateX(-50%) scaleX(1); }
-      50% { opacity: 1; transform: translateX(-50%) scaleX(1.2); }
+      0%, 100% { opacity: 0.8; transform: scaleX(1); }
+      50% { opacity: 1; transform: scaleX(1.2); }
     }
 
+    /* Canvas para estrelas */
     .estrelas {
       position: fixed;
       top: 0; 
@@ -235,6 +270,7 @@
       z-index: -1;
     }
 
+    /* Frases otimizadas */
     #frasesDexter {
       position: fixed;
       top: 60%;
@@ -245,16 +281,17 @@
       text-align: center;
       font-size: clamp(1rem, 2.5vw, 1.3rem);
       line-height: 1.8;
-      color: #fff;
+      color: var(--accent-color);
       padding: 20px;
       opacity: 0;
       transition: opacity 2s ease-in-out;
       font-family: 'Georgia', serif;
       text-shadow: 0 0 10px rgba(255,255,255,0.5);
       z-index: 10;
+      will-change: opacity;
     }
 
-    /* Botões responsivos */
+    /* Controles otimizados */
     .btn-controls {
       position: fixed;
       display: flex;
@@ -274,12 +311,18 @@
       cursor: pointer;
       transition: all 0.3s ease;
       backdrop-filter: blur(5px);
+      will-change: transform;
     }
 
-    .btn:hover {
+    .btn:hover, .btn:focus {
       background: rgba(255,255,255,0.2);
       transform: scale(1.1);
       box-shadow: 0 0 20px rgba(255,255,255,0.5);
+      outline: none;
+    }
+
+    .btn:active {
+      transform: scale(0.95);
     }
 
     .botao-luz {
@@ -288,7 +331,7 @@
       right: 20px;
       padding: clamp(10px, 2vw, 15px) clamp(15px, 3vw, 20px);
       font-size: clamp(0.9rem, 2vw, 1.1rem);
-      background: linear-gradient(135deg, #ff4081, #ff6b9d);
+      background: linear-gradient(135deg, var(--secondary-color), #ff6b9d);
       color: white;
       border: none;
       border-radius: 30px;
@@ -297,11 +340,17 @@
       z-index: 20;
       transition: all 0.3s ease;
       animation: pulsar 3s infinite ease-in-out;
+      will-change: transform, box-shadow;
     }
 
-    .botao-luz:hover {
+    .botao-luz:hover, .botao-luz:focus {
       transform: scale(1.05);
       box-shadow: 0 0 30px rgba(255, 64, 129, 0.8);
+      outline: none;
+    }
+
+    .botao-luz:active {
+      transform: scale(0.95);
     }
 
     @keyframes pulsar {
@@ -309,32 +358,7 @@
       50% { box-shadow: 0 0 30px rgba(255, 64, 129, 1); }
     }
 
-    .carta-flutuante {
-      position: absolute;
-      bottom: 35%;
-      left: -60px;
-      font-size: clamp(2rem, 4vw, 3rem);
-      animation: flutuarCarta 15s linear infinite;
-      cursor: pointer;
-      z-index: 10;
-      filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
-      transition: transform 0.3s ease;
-    }
-
-    .carta-flutuante:hover {
-      transform: scale(1.2);
-      filter: drop-shadow(0 0 20px rgba(255,255,255,0.8));
-    }
-
-    @keyframes flutuarCarta {
-      0% { transform: translateX(0) translateY(0); }
-      25% { transform: translateX(25vw) translateY(-2vh); }
-      50% { transform: translateX(50vw) translateY(0); }
-      75% { transform: translateX(75vw) translateY(-1vh); }
-      100% { transform: translateX(120vw) translateY(0); }
-    }
-
-    /* Modais responsivos */
+    /* Modais otimizados */
     .modal {
       display: none;
       position: fixed;
@@ -346,7 +370,7 @@
       background: rgba(0, 0, 0, 0.8);
       border: 2px solid rgba(255,255,255,0.3);
       padding: clamp(20px, 4vw, 30px);
-      color: #fff;
+      color: var(--accent-color);
       text-align: center;
       font-size: clamp(1rem, 2.5vw, 1.2rem);
       border-radius: 20px;
@@ -354,6 +378,7 @@
       box-shadow: 0 0 30px rgba(255,255,255,0.3);
       z-index: 999;
       animation: aparecer 0.6s ease forwards;
+      will-change: transform, opacity;
     }
 
     .modal.close {
@@ -361,13 +386,13 @@
     }
 
     @keyframes aparecer {
-      0% { opacity: 0; transform: scale(0.8) translate(-50%, -50%); }
+      0% { opacity: 0; transform: scale(0.8) translate(-62.5%, -62.5%); }
       100% { opacity: 1; transform: scale(1) translate(-50%, -50%); }
     }
 
     @keyframes desaparecer {
       0% { opacity: 1; transform: scale(1) translate(-50%, -50%); }
-      100% { opacity: 0; transform: scale(0.8) translate(-50%, -50%); }
+      100% { opacity: 0; transform: scale(0.8) translate(-62.5%, -62.5%); }
     }
 
     .close-btn {
@@ -378,13 +403,16 @@
       cursor: pointer;
       color: rgba(255,255,255,0.7);
       transition: color 0.3s ease;
+      background: none;
+      border: none;
     }
 
-    .close-btn:hover {
-      color: #fff;
+    .close-btn:hover, .close-btn:focus {
+      color: var(--accent-color);
+      outline: none;
     }
 
-    /* Canvas responsivo */
+    /* Canvas para coração */
     #coracaoCanvas {
       position: fixed;
       top: 0; 
@@ -395,7 +423,7 @@
       z-index: 15;
     }
 
-    /* Efeitos de partículas */
+    /* Efeitos de partículas otimizados */
     .particle {
       position: fixed;
       width: 4px;
@@ -404,9 +432,10 @@
       border-radius: 50%;
       pointer-events: none;
       z-index: 5;
+      will-change: transform, opacity;
     }
 
-    /* Ondas de clique */
+    /* Ondas de clique otimizadas */
     .click-wave {
       position: fixed;
       border: 2px solid rgba(255,255,255,0.6);
@@ -414,6 +443,7 @@
       pointer-events: none;
       z-index: 50;
       animation: wave 0.6s ease-out forwards;
+      will-change: transform, opacity;
     }
 
     @keyframes wave {
@@ -429,7 +459,7 @@
       }
     }
 
-    /* Responsividade para dispositivos móveis */
+    /* Responsividade melhorada */
     @media (max-width: 768px) {
       .btn-controls {
         top: 10px;
@@ -442,10 +472,6 @@
         right: 10px;
       }
 
-      .carta-flutuante {
-        bottom: 30%;
-      }
-
       #frasesDexter {
         top: 65%;
         width: 95%;
@@ -453,7 +479,7 @@
     }
 
     @media (max-width: 480px) {
-      .luna {
+      .lua {
         top: 8vh;
       }
 
@@ -467,9 +493,8 @@
       }
     }
 
-    /* Orientação landscape em mobile */
     @media (orientation: landscape) and (max-height: 500px) {
-      .luna {
+      .lua {
         top: 5vh;
       }
 
@@ -482,710 +507,667 @@
         font-size: clamp(0.8rem, 2vw, 1rem);
       }
     }
+
+    /* Acessibilidade */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Estados de foco para acessibilidade */
+    .lua:focus,
+    .barco:focus {
+      outline: 2px solid rgba(255,255,255,0.8);
+      outline-offset: 4px;
+    }
+
+    /* Loading screen */
+    .loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, var(--primary-color) 0%, #000 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      transition: opacity 1s ease;
+    }
+
+    .loading.hide {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loading-text {
+      color: var(--accent-color);
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      animation: loading-pulse 2s infinite ease-in-out;
+    }
+
+    @keyframes loading-pulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
   </style>
 </head>
 <body>
-  <div class="cursor"></div>
-  <div class="background-gradient"></div>
+  <!-- Loading Screen -->
+  <div class="loading" id="loading">
+    <div class="loading-text">Conectando...</div>
+  </div>
+
+  <!-- Cursor personalizado -->
+  <div class="cursor" id="cursor"></div>
   
-  <div id="frasesDexter"></div>
+  <!-- Gradiente de fundo -->
+  <div class="background-gradient" id="backgroundGradient"></div>
   
-  <div class="lua" id="lua"></div>
-  <div class="reflexo-lua"></div>
-  <div class="mar"></div>
+  <!-- Texto das frases -->
+  <div id="frasesDexter" role="status" aria-live="polite"></div>
+  
+  <!-- Elementos da cena -->
+  <div class="lua" id="lua" tabindex="0" role="button" aria-label="Lua interativa"></div>
+  <div class="reflexo-lua" aria-hidden="true"></div>
+  <div class="mar" aria-hidden="true"></div>
 
-  <div class="barco" id="barco">
-    <div class="boneco"></div>
+  <div class="barco" id="barco" tabindex="0" role="button" aria-label="Barco interativo">
+    <div class="boneco" aria-hidden="true"></div>
   </div>
 
-  <canvas class="estrelas" id="estrelas"></canvas>
+  <!-- Canvas para estrelas -->
+  <canvas class="estrelas" id="estrelas" aria-hidden="true"></canvas>
 
-  <div class="btn-controls">
-    <button class="btn" id="btn-audio">🔈</button>
-    <button class="btn" id="btn-fullscreen">⛶</button>
-    <button class="btn" id="btn-pause">⏸️</button>
+  <!-- Controles -->
+  <div class="btn-controls" role="toolbar" aria-label="Controles da aplicação">
+    <button class="btn" id="btn-audio" aria-label="Controle de áudio">🔈</button>
+    <button class="btn" id="btn-fullscreen" aria-label="Tela cheia">⛶</button>
+    <button class="btn" id="btn-pause" aria-label="Pausar animações">⏸️</button>
   </div>
 
-  <button id="btn-luz" class="botao-luz">💌 Enviar essa luz para alguém</button>
+  <button id="btn-luz" class="botao-luz" aria-label="Enviar luz para alguém">💌 Enviar essa luz para alguém</button>
 
-  <div id="carta" class="carta-flutuante">📨</div>
+  <!-- Canvas para coração -->
+  <canvas id="coracaoCanvas" aria-hidden="true"></canvas>
 
-  <canvas id="coracaoCanvas"></canvas>
-
-  <div id="caixaCarta" class="modal">
-    <span class="close-btn" id="closeCarta">&times;</span>
-    <h3>Mensagem do Mar</h3>
-    <p id="mensagemCarta">Você é minha luz, mesmo na minha escuridão.</p>
-  </div>
-
-  <div id="mensagemLuz" class="modal">
-    <span class="close-btn" id="closeLuz">&times;</span>
-    <h3>Luz Enviada</h3>
+  <!-- Modal para mensagem de luz -->
+  <div id="mensagemLuz" class="modal" role="dialog" aria-labelledby="titulo-luz" aria-hidden="true">
+    <button class="close-btn" id="closeLuz" aria-label="Fechar">&times;</button>
+    <h3 id="titulo-luz">Luz Enviada</h3>
     <p id="textoLuz">Essa luz é para você, <strong>alguém especial</strong></p>
   </div>
 
-  <audio id="audio-mar" loop>
-    <source src="https://cdn.pixabay.com/download/audio/2021/08/08/audio_548f1cf74f.mp3?filename=mar-calmo.wav" type="audio/mpeg">
+  <!-- Áudio -->
+  <audio id="audio-mar" loop preload="none" aria-label="Som do mar">
+    <source src="data:audio/mpeg;base64,//uQZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAACcQCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA//////////////////////////////////////////////////////////////////8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALAMAAAAAADlgZ3AAAA==" type="audio/mpeg">
   </audio>
 
   <script>
-    // Cursor personalizado
-    const cursor = document.querySelector('.cursor');
-    const backgroundGradient = document.querySelector('.background-gradient');
-    
-    document.addEventListener('mousemove', (e) => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-      
-      // Atualiza gradiente de fundo
-      const x = (e.clientX / window.innerWidth) * 100;
-      const y = (e.clientY / window.innerHeight) * 100;
-      backgroundGradient.style.setProperty('--mouse-x', x + '%');
-      backgroundGradient.style.setProperty('--mouse-y', y + '%');
-    });
-
-    document.addEventListener('mousedown', () => {
-      cursor.classList.add('clicked');
-    });
-
-    document.addEventListener('mouseup', () => {
-      cursor.classList.remove('clicked');
-    });
-
-    // Efeito de clique com ondas
-    document.addEventListener('click', (e) => {
-      const wave = document.createElement('div');
-      wave.className = 'click-wave';
-      wave.style.left = (e.clientX - 50) + 'px';
-      wave.style.top = (e.clientY - 50) + 'px';
-      document.body.appendChild(wave);
-      
-      setTimeout(() => {
-        wave.remove();
-      }, 600);
-    });
-
-    // Controles de áudio
-    const audio = document.getElementById('audio-mar');
-    const btnAudio = document.getElementById('btn-audio');
-    let tocando = false;
-
-    btnAudio.addEventListener('click', () => {
-      if (tocando) {
-        audio.pause();
-        btnAudio.textContent = "🔈";
-      } else {
-        audio.play().catch(e => console.log('Erro ao reproduzir áudio:', e));
-        btnAudio.textContent = "🔊";
+    // Classe principal da aplicação
+    class ConectadosPelaLuz {
+      constructor() {
+        this.isVisible = true;
+        this.audioPlaying = false;
+        this.animationsPaused = false;
+        this.currentPhraseIndex = 0;
+        this.mouseX = 50;
+        this.mouseY = 50;
+        
+        this.init();
       }
-      tocando = !tocando;
-    });
 
-    // Fullscreen
-    const btnFullscreen = document.getElementById('btn-fullscreen');
-    btnFullscreen.addEventListener('click', () => {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen();
-        btnFullscreen.textContent = "🗗";
-      } else {
-        document.exitFullscreen();
-        btnFullscreen.textContent = "⛶";
+      init() {
+        this.setupElements();
+        this.setupEventListeners();
+        this.initializeStars();
+        this.initializePhrases();
+        this.hideLoading();
+        
+        console.log('🌙 Conectados pela Luz - Versão Otimizada');
+        console.log('⌨️  Atalhos: Espaço(Pausar), M(Áudio), F(Tela cheia), L(Enviar luz), ESC(Fechar)');
       }
-    });
 
-    // Pausa/Play animações
-    const btnPause = document.getElementById('btn-pause');
-    let pausado = false;
+      setupElements() {
+        this.cursor = document.getElementById('cursor');
+        this.backgroundGradient = document.getElementById('backgroundGradient');
+        this.audio = document.getElementById('audio-mar');
+        this.btnAudio = document.getElementById('btn-audio');
+        this.btnFullscreen = document.getElementById('btn-fullscreen');
+        this.btnPause = document.getElementById('btn-pause');
+        this.btnLuz = document.getElementById('btn-luz');
+        this.lua = document.getElementById('lua');
+        this.barco = document.getElementById('barco');
+        this.frasesContainer = document.getElementById('frasesDexter');
+        this.starsCanvas = document.getElementById('estrelas');
+        this.starsCtx = this.starsCanvas.getContext('2d');
+        this.heartCanvas = document.getElementById('coracaoCanvas');
+        this.heartCtx = this.heartCanvas.getContext('2d');
+        this.mensagemLuz = document.getElementById('mensagemLuz');
+        this.textoLuz = document.getElementById('textoLuz');
+        this.closeLuz = document.getElementById('closeLuz');
+        this.loading = document.getElementById('loading');
+      }
 
-    btnPause.addEventListener('click', () => {
-      if (pausado) {
-        document.body.style.animationPlayState = 'running';
-        document.querySelectorAll('*').forEach(el => {
-          el.style.animationPlayState = 'running';
+      setupEventListeners() {
+        // Mouse e cursor
+        document.addEventListener('mousemove', this.handleMouseMove.bind(this));
+        document.addEventListener('mousedown', () => this.cursor.classList.add('clicked'));
+        document.addEventListener('mouseup', () => this.cursor.classList.remove('clicked'));
+        document.addEventListener('click', this.handleClick.bind(this));
+
+        // Controles
+        this.btnAudio.addEventListener('click', this.toggleAudio.bind(this));
+        this.btnFullscreen.addEventListener('click', this.toggleFullscreen.bind(this));
+        this.btnPause.addEventListener('click', this.toggleAnimations.bind(this));
+        this.btnLuz.addEventListener('click', this.sendLight.bind(this));
+
+        // Elementos interativos
+        this.lua.addEventListener('click', this.handleMoonClick.bind(this));
+        this.barco.addEventListener('click', this.handleBoatClick.bind(this));
+
+        // Modais
+        this.closeLuz.addEventListener('click', this.closeLightModal.bind(this));
+        document.addEventListener('click', this.handleModalClick.bind(this));
+
+        // Teclado
+        document.addEventListener('keydown', this.handleKeydown.bind(this));
+
+        // Touch para mobile
+        document.addEventListener('touchstart', this.handleTouchStart.bind(this));
+        document.addEventListener('touchend', this.handleTouchEnd.bind(this));
+
+        // Redimensionamento e visibilidade
+        window.addEventListener('resize', this.handleResize.bind(this));
+        window.addEventListener('orientationchange', this.handleOrientationChange.bind(this));
+        document.addEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
+
+        // Inicialização de áudio com primeira interação
+        ['click', 'touchstart', 'keydown'].forEach(event => {
+          document.addEventListener(event, this.initAudio.bind(this), { once: true });
         });
-        btnPause.textContent = "⏸️";
-      } else {
-        document.body.style.animationPlayState = 'paused';
-        document.querySelectorAll('*').forEach(el => {
-          el.style.animationPlayState = 'paused';
-        });
-        btnPause.textContent = "▶️";
       }
-      pausado = !pausado;
-    });
 
-    // Estrelas animadas
-    const canvas = document.getElementById('estrelas');
-    const ctx = canvas.getContext('2d');
-    
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    let estrelas = [];
-    let meteoros = [];
-
-    function criarEstrela() {
-      return {
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height * 0.6,
-        vx: -0.5 - Math.random() * 1,
-        vy: 0.5 + Math.random() * 1,
-        tamanho: 1 + Math.random() * 2,
-        brilho: 0.3 + Math.random() * 0.7,
-        piscada: Math.random() * Math.PI * 2
-      };
-    }
-
-    function criarMeteoro() {
-      return {
-        x: Math.random() * canvas.width,
-        y: 0,
-        vx: -2 - Math.random() * 3,
-        vy: 1 + Math.random() * 2,
-        tamanho: 1 + Math.random() * 2,
-        vida: 100,
-        trail: []
-      };
-    }
-
-    function desenhar() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Desenhar estrelas
-      estrelas.forEach((estrela, i) => {
-        estrela.piscada += 0.05;
-        const brilho = estrela.brilho * (0.5 + 0.5 * Math.sin(estrela.piscada));
+      handleMouseMove(e) {
+        this.cursor.style.left = e.clientX + 'px';
+        this.cursor.style.top = e.clientY + 'px';
         
-        ctx.beginPath();
-        ctx.arc(estrela.x, estrela.y, estrela.tamanho, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${brilho})`;
-        ctx.fill();
+        this.mouseX = (e.clientX / window.innerWidth) * 100;
+        this.mouseY = (e.clientY / window.innerHeight) * 100;
         
-        // Efeito de brilho
-        if (brilho > 0.8) {
-          ctx.beginPath();
-          ctx.arc(estrela.x, estrela.y, estrela.tamanho * 2, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 255, 255, ${(brilho - 0.8) * 0.3})`;
-          ctx.fill();
-        }
-        
-        estrela.x += estrela.vx;
-        estrela.y += estrela.vy;
-        
-        if (estrela.x < -10 || estrela.y > canvas.height + 10) {
-          estrelas[i] = criarEstrela();
-        }
-      });
-      
-      // Desenhar meteoros
-      meteoros.forEach((meteoro, i) => {
-        meteoro.trail.push({x: meteoro.x, y: meteoro.y});
-        if (meteoro.trail.length > 10) meteoro.trail.shift();
-        
-        // Desenhar rastro
-        meteoro.trail.forEach((pos, j) => {
-          const alpha = j / meteoro.trail.length * 0.8;
-          ctx.beginPath();
-          ctx.arc(pos.x, pos.y, meteoro.tamanho * (j / meteoro.trail.length), 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
-          ctx.fill();
-        });
-        
-        meteoro.x += meteoro.vx;
-        meteoro.y += meteoro.vy;
-        meteoro.vida--;
-        
-        if (meteoro.vida <= 0 || meteoro.x < -10 || meteoro.y > canvas.height + 10) {
-          meteoros.splice(i, 1);
-        }
-      });
-      
-      requestAnimationFrame(desenhar);
-    }
-
-    // Inicializar estrelas
-    for (let i = 0; i < 50; i++) {
-      estrelas.push(criarEstrela());
-    }
-
-    // Criar meteoros ocasionalmente
-    setInterval(() => {
-      if (Math.random() < 0.1 && meteoros.length < 3) {
-        meteoros.push(criarMeteoro());
+        this.backgroundGradient.style.background = `radial-gradient(circle at ${this.mouseX}% ${this.mouseY}%, rgba(13, 27, 42, 0.9) 0%, rgba(0, 0, 0, 1) 70%)`;
       }
-    }, 2000);
 
-    desenhar();
-
-    // Interação com a lua
-    const lua = document.getElementById('lua');
-    lua.addEventListener('click', () => {
-      lua.style.animation = 'aparecerLua 1s ease-in, pulsarLua 2s infinite ease-in-out 1s';
-      
-      // Criar partículas mágicas
-      for (let i = 0; i < 20; i++) {
-        setTimeout(() => {
-          criarParticula(
-            lua.offsetLeft + lua.offsetWidth / 2,
-            lua.offsetTop + lua.offsetHeight / 2
-          );
-        }, i * 50);
+      handleClick(e) {
+        this.createClickWave(e.clientX, e.clientY);
       }
-    });
 
-    // Interação com o barco
-    const barco = document.getElementById('barco');
-    barco.addEventListener('click', () => {
-      barco.style.animation = 'flutuar 1s ease-in-out, flutuar 3s infinite ease-in-out 1s';
-      
-      // Mostrar pensamento de Dexter
-      const frases = [
-        "Rita... você está vendo isso?",
-        "Mesmo separados, compartilhamos esta vista.",
-        "A lua nos conecta, não importa a distância."
-      ];
-      
-      const frase = frases[Math.floor(Math.random() * frases.length)];
-      mostrarFrasePersonalizada(frase);
-    });
+      createClickWave(x, y) {
+        const wave = document.createElement('div');
+        wave.className = 'click-wave';
+        wave.style.left = (x - 50) + 'px';
+        wave.style.top = (y - 50) + 'px';
+        document.body.appendChild(wave);
+        
+        setTimeout(() => wave.remove(), 600);
+      }
 
-    // Função para criar partículas
-    function criarParticula(x, y) {
-      const particula = document.createElement('div');
-      particula.className = 'particle';
-      particula.style.left = x + 'px';
-      particula.style.top = y + 'px';
-      document.body.appendChild(particula);
-      
-      const vx = (Math.random() - 0.5) * 200;
-      const vy = -Math.random() * 200 - 50;
-      const gravity = 0.5;
-      
-      let posX = x, posY = y;
-      let velX = vx, velY = vy;
-      
-      function animar() {
-        posX += velX * 0.01;
-        posY += velY * 0.01;
-        velY += gravity;
-        
-        particula.style.left = posX + 'px';
-        particula.style.top = posY + 'px';
-        particula.style.opacity = Math.max(0, 1 - posY / window.innerHeight);
-        
-        if (posY < window.innerHeight && parseFloat(particula.style.opacity) > 0) {
-          requestAnimationFrame(animar);
+      toggleAudio() {
+        if (this.audioPlaying) {
+          this.audio.pause();
+          this.btnAudio.textContent = "🔈";
         } else {
-          particula.remove();
+          this.audio.play().catch(e => console.log('Erro ao reproduzir áudio:', e));
+          this.btnAudio.textContent = "🔊";
+        }
+        this.audioPlaying = !this.audioPlaying;
+      }
+
+      toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(e => console.log('Erro ao entrar em tela cheia:', e));
+          this.btnFullscreen.textContent = "🗗";
+        } else {
+          document.exitFullscreen();
+          this.btnFullscreen.textContent = "⛶";
         }
       }
-      
-      animar();
-    }
 
-    // Sistema de frases de Dexter
-    const frases = [
-      "Será que a Rita está olhando pra mesma lua, neste exato momento?",
-      "Gosto disso... conectados pela luz.",
-      "O Passageiro Sombrio tentou lutar contra isso, quis me manter só pra ele.",
-      "Mas agora é a minha vez... minha vez de ter o que eu quero.",
-      "Abraçar minha família.",
-      "E talvez, um dia, não muito distante... eu me livre do Passageiro Sombrio.",
-      "Tudo começa com uma fuga. Um tempo longe do velho eu.",
-      "Está tudo bem. A vida não precisa ser perfeita... só precisa ser vivida."
-    ];
+      toggleAnimations() {
+        const playState = this.animationsPaused ? 'running' : 'paused';
+        document.documentElement.style.setProperty('animation-play-state', playState);
+        
+        document.querySelectorAll('*').forEach(el => {
+          el.style.animationPlayState = playState;
+        });
+        
+        this.btnPause.textContent = this.animationsPaused ? "⏸️" : "▶️";
+        this.animationsPaused = !this.animationsPaused;
+      }
 
-    const container = document.getElementById("frasesDexter");
-    let index = 0;
+      handleMoonClick() {
+        this.lua.style.animation = 'aparecerLua 1s ease-in, pulsarLua 2s infinite ease-in-out 1s';
+        
+        for (let i = 0; i < 20; i++) {
+          setTimeout(() => {
+            this.createParticle(
+              this.lua.offsetLeft + this.lua.offsetWidth / 2,
+              this.lua.offsetTop + this.lua.offsetHeight / 2
+            );
+          }, i * 50);
+        }
 
-    function mostrarFrase() {
-      container.style.opacity = 0;
+        this.showCustomPhrase("A lua nos conecta, não importa a distância. 🌙");
+      }
 
-      setTimeout(() => {
-        container.innerText = frases[index];
-        container.style.opacity = 1;
+      handleBoatClick() {
+        this.barco.style.animation = 'flutuar 1s ease-in-out, flutuar 3s infinite ease-in-out 1s';
+        
+        const phrases = [
+          "Navegando pelos pensamentos...",
+          "Mesmo separados, compartilhamos esta vista.",
+          "As ondas sussurram segredos antigos."
+        ];
+        
+        const phrase = phrases[Math.floor(Math.random() * phrases.length)];
+        this.showCustomPhrase(phrase);
+      }
 
-        setTimeout(() => {
-          container.style.opacity = 0;
-          index++;
-          if (index < frases.length) {
-            setTimeout(mostrarFrase, 2000);
+      createParticle(x, y) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        document.body.appendChild(particle);
+        
+        const vx = (Math.random() - 0.5) * 4;
+        const vy = -Math.random() * 4 - 1;
+        const gravity = 0.1;
+        
+        let posX = x, posY = y;
+        let velX = vx, velY = vy;
+        
+        const animate = () => {
+          posX += velX;
+          posY += velY;
+          velY += gravity;
+          
+          particle.style.left = posX + 'px';
+          particle.style.top = posY + 'px';
+          particle.style.opacity = Math.max(0, 1 - posY / window.innerHeight);
+          
+          if (posY < window.innerHeight && parseFloat(particle.style.opacity) > 0) {
+            requestAnimationFrame(animate);
           } else {
-            // Reiniciar o ciclo após todas as frases
-            setTimeout(() => {
-              index = 0;
-              mostrarFrase();
-            }, 10000);
+            particle.remove();
           }
-        }, 4000);
-      }, 1000);
-    }
+        };
+        
+        animate();
+      }
 
-    function mostrarFrasePersonalizada(frase) {
-      const temp = container.innerText;
-      container.style.opacity = 0;
-      
-      setTimeout(() => {
-        container.innerText = frase;
-        container.style.opacity = 1;
+      sendLight() {
+        this.drawHeart();
+      }
+
+      drawHeart() {
+        this.resizeCanvas(this.heartCanvas);
+        
+        const particles = [];
+        const centerX = this.heartCanvas.width / 2;
+        const centerY = this.heartCanvas.height / 2;
+        
+        // Criar partículas do coração
+        for (let i = 0; i < 300; i++) {
+          const t = Math.PI * 2 * (i / 300);
+          const pos = this.generateHeart(t);
+          particles.push({
+            x: centerX + pos.x * (window.innerWidth > 768 ? 15 : 10),
+            y: centerY - pos.y * (window.innerWidth > 768 ? 15 : 10),
+            r: Math.random() * 3 + 1,
+            alpha: 0,
+            targetAlpha: 0.5 + Math.random() * 0.5,
+            pulse: Math.random() * Math.PI * 2,
+            color: `hsl(${320 + Math.random() * 40}, 100%, ${60 + Math.random() * 20}%)`
+          });
+        }
+
+        let frame = 0;
+        const animate = () => {
+          this.heartCtx.clearRect(0, 0, this.heartCanvas.width, this.heartCanvas.height);
+          frame++;
+
+          particles.forEach(p => {
+            p.pulse += 0.1;
+            p.alpha += (p.targetAlpha - p.alpha) * 0.05;
+            
+            const pulseAlpha = p.alpha * (0.8 + 0.2 * Math.sin(p.pulse));
+            
+            this.heartCtx.beginPath();
+            this.heartCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            this.heartCtx.fillStyle = p.color.replace('hsl', 'hsla').replace(')', `, ${pulseAlpha})`);
+            this.heartCtx.fill();
+            
+            if (pulseAlpha > 0.6) {
+              this.heartCtx.beginPath();
+              this.heartCtx.arc(p.x, p.y, p.r * 2, 0, Math.PI * 2);
+              this.heartCtx.fillStyle = p.color.replace('hsl', 'hsla').replace(')', `, ${(pulseAlpha - 0.6) * 0.3})`);
+              this.heartCtx.fill();
+            }
+          });
+
+          if (frame < 120) {
+            requestAnimationFrame(animate);
+          } else {
+            setTimeout(() => this.showLightMessage(), 1000);
+          }
+        };
+
+        this.heartCanvas.style.display = "block";
+        animate();
+      }
+
+      generateHeart(t) {
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+        return { x, y };
+      }
+
+      showLightMessage() {
+        const name = prompt("Para quem você quer enviar essa luz?");
+        const text = name 
+          ? `Essa luz é para você, <strong>${this.escapeHtml(name)}</strong>!<br><br>Que ela ilumine seus caminhos e traga paz ao seu coração. 🌙✨`
+          : `Essa luz é para você, <strong>alguém especial</strong>!<br><br>Que ela ilumine seus caminhos e traga paz ao seu coração. 🌙✨`;
+        
+        this.textoLuz.innerHTML = text;
+        this.mensagemLuz.style.display = "block";
+        this.mensagemLuz.setAttribute('aria-hidden', 'false');
         
         setTimeout(() => {
-          container.style.opacity = 0;
-          setTimeout(() => {
-            container.innerText = temp;
-            container.style.opacity = 1;
-          }, 1000);
+          this.heartCanvas.style.display = "none";
+          this.heartCtx.clearRect(0, 0, this.heartCanvas.width, this.heartCanvas.height);
         }, 3000);
-      }, 500);
-    }
-
-    // Iniciar frases após 3 segundos
-    setTimeout(mostrarFrase, 3000);
-
-    // Sistema de carta flutuante
-    const carta = document.getElementById('carta');
-    const caixaCarta = document.getElementById('caixaCarta');
-    const mensagemCarta = document.getElementById('mensagemCarta');
-    const closeCarta = document.getElementById('closeCarta');
-
-    carta.addEventListener('click', () => {
-      // Parar animação da carta
-      carta.style.animation = 'none';
-      
-      // Verificar se há mensagem salva
-      let mensagemSalva = null;
-      try {
-        mensagemSalva = JSON.parse(localStorage.getItem("mensagemAmor"));
-      } catch (e) {
-        mensagemSalva = null;
       }
-      
-      let novaMensagem = mensagemSalva?.texto;
 
-      if (!mensagemSalva || !novaMensagem) {
-        novaMensagem = prompt("Escreva a mensagem que quer deixar nessa carta:");
-        if (novaMensagem) {
-          try {
-            localStorage.setItem("mensagemAmor", JSON.stringify({
-              texto: novaMensagem,
-              data: new Date().toISOString()
-            }));
-          } catch (e) {
-            console.log('Não foi possível salvar a mensagem');
+      escapeHtml(unsafe) {
+        return unsafe
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      closeLightModal() {
+        this.mensagemLuz.classList.add('close');
+        setTimeout(() => {
+          this.mensagemLuz.style.display = "none";
+          this.mensagemLuz.classList.remove('close');
+          this.mensagemLuz.setAttribute('aria-hidden', 'true');
+        }, 600);
+      }
+
+      handleModalClick(e) {
+        if (e.target === this.mensagemLuz) {
+          this.closeLightModal();
+        }
+      }
+
+      handleKeydown(e) {
+        switch(e.key) {
+          case 'Escape':
+            if (this.mensagemLuz.style.display === 'block') this.closeLightModal();
+            break;
+          case ' ':
+            e.preventDefault();
+            this.toggleAnimations();
+            break;
+          case 'm':
+          case 'M':
+            this.toggleAudio();
+            break;
+          case 'f':
+          case 'F':
+            this.toggleFullscreen();
+            break;
+          case 'l':
+          case 'L':
+            this.sendLight();
+            break;
+        }
+      }
+
+      touchStartTime = 0;
+
+      handleTouchStart(e) {
+        this.touchStartTime = Date.now();
+      }
+
+      handleTouchEnd(e) {
+        const touchDuration = Date.now() - this.touchStartTime;
+        
+        if (touchDuration > 500) {
+          const touch = e.changedTouches[0];
+          for (let i = 0; i < 10; i++) {
+            setTimeout(() => {
+              this.createParticle(touch.clientX, touch.clientY);
+            }, i * 100);
           }
         }
       }
 
-      mensagemCarta.innerText = novaMensagem || "Você é minha luz, mesmo na minha escuridão.";
-      caixaCarta.style.display = "block";
-      
-      // Reiniciar animação da carta após fechar
-      setTimeout(() => {
-        carta.style.animation = 'flutuarCarta 15s linear infinite';
-      }, 30000);
-    });
-
-    closeCarta.addEventListener('click', () => {
-      caixaCarta.classList.add('close');
-      setTimeout(() => {
-        caixaCarta.style.display = "none";
-        caixaCarta.classList.remove('close');
-      }, 600);
-    });
-
-    // Sistema de envio de luz
-    const canvasC = document.getElementById('coracaoCanvas');
-    const ctxC = canvasC.getContext('2d');
-    const btnLuz = document.getElementById('btn-luz');
-    const mensagemLuz = document.getElementById('mensagemLuz');
-    const textoLuz = document.getElementById('textoLuz');
-    const closeLuz = document.getElementById('closeLuz');
-
-    function resizeCanvasC() {
-      canvasC.width = window.innerWidth;
-      canvasC.height = window.innerHeight;
-    }
-    
-    resizeCanvasC();
-    window.addEventListener('resize', resizeCanvasC);
-
-    function gerarCoração(t) {
-      const x = 16 * Math.pow(Math.sin(t), 3);
-      const y = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
-      return { x, y };
-    }
-
-    function desenharCoração() {
-      let particles = [];
-      const centerX = canvasC.width / 2;
-      const centerY = canvasC.height / 2;
-      
-      // Criar partículas do coração
-      for (let i = 0; i < 300; i++) {
-        const t = Math.PI * 2 * (i / 300);
-        const pos = gerarCoração(t);
-        particles.push({
-          x: centerX + pos.x * (window.innerWidth > 768 ? 15 : 10),
-          y: centerY - pos.y * (window.innerWidth > 768 ? 15 : 10),
-          r: Math.random() * 3 + 1,
-          alpha: 0,
-          targetAlpha: 0.5 + Math.random() * 0.5,
-          pulso: Math.random() * Math.PI * 2,
-          cor: `hsl(${320 + Math.random() * 40}, 100%, ${60 + Math.random() * 20}%)`
-        });
+      handleResize() {
+        this.resizeCanvas(this.starsCanvas);
+        this.resizeCanvas(this.heartCanvas);
       }
 
-      // Adicionar partículas extras para efeito mais denso
-      for (let i = 0; i < 100; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const radius = Math.random() * 50 + 20;
-        particles.push({
-          x: centerX + Math.cos(angle) * radius,
-          y: centerY + Math.sin(angle) * radius,
-          r: Math.random() * 2 + 0.5,
-          alpha: 0,
-          targetAlpha: 0.3 + Math.random() * 0.3,
-          pulso: Math.random() * Math.PI * 2,
-          cor: `hsl(${320 + Math.random() * 40}, 100%, ${70 + Math.random() * 20}%)`
-        });
+      handleOrientationChange() {
+        setTimeout(() => {
+          this.handleResize();
+        }, 100);
       }
 
-      let frame = 0;
-      function animar() {
-        ctxC.clearRect(0, 0, canvasC.width, canvasC.height);
-        frame++;
-
-        particles.forEach(p => {
-          p.pulso += 0.1;
-          p.alpha += (p.targetAlpha - p.alpha) * 0.05;
-          
-          const pulsoAlpha = p.alpha * (0.8 + 0.2 * Math.sin(p.pulso));
-          
-          ctxC.beginPath();
-          ctxC.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-          ctxC.fillStyle = p.cor.replace('hsl', 'hsla').replace(')', `, ${pulsoAlpha})`);
-          ctxC.fill();
-          
-          // Efeito de brilho
-          if (pulsoAlpha > 0.6) {
-            ctxC.beginPath();
-            ctxC.arc(p.x, p.y, p.r * 2, 0, Math.PI * 2);
-            ctxC.fillStyle = p.cor.replace('hsl', 'hsla').replace(')', `, ${(pulsoAlpha - 0.6) * 0.3})`);
-            ctxC.fill();
+      handleVisibilityChange() {
+        if (document.hidden) {
+          this.isVisible = false;
+          if (this.audioPlaying) {
+            this.audio.pause();
           }
-        });
-
-        if (frame < 120) {
-          requestAnimationFrame(animar);
         } else {
-          setTimeout(mostrarMensagemLuz, 1000);
+          this.isVisible = true;
+          if (this.audioPlaying) {
+            this.audio.play().catch(e => console.log('Erro ao retomar áudio'));
+          }
         }
       }
 
-      canvasC.style.display = "block";
-      animar();
-    }
-
-    function mostrarMensagemLuz() {
-      const nome = prompt("Para quem você quer enviar essa luz?");
-      if (nome) {
-        textoLuz.innerHTML = `Essa luz é para você, <strong>${nome}</strong>!<br><br>Que ela ilumine seus caminhos e traga paz ao seu coração. 🌙✨`;
-      } else {
-        textoLuz.innerHTML = `Essa luz é para você, <strong>alguém especial</strong>!<br><br>Que ela ilumine seus caminhos e traga paz ao seu coração. 🌙✨`;
+      initAudio() {
+        this.audio.play().then(() => {
+          this.audioPlaying = true;
+          this.btnAudio.textContent = "🔊";
+        }).catch(e => {
+          console.log('Áudio será reproduzido após interação');
+        });
       }
-      mensagemLuz.style.display = "block";
-      
-      // Esconder coração após 3 segundos
-      setTimeout(() => {
-        canvasC.style.display = "none";
-        ctxC.clearRect(0, 0, canvasC.width, canvasC.height);
-      }, 3000);
-    }
 
-    btnLuz.addEventListener("click", () => {
-      desenharCoração();
-    });
-
-    closeLuz.addEventListener('click', () => {
-      mensagemLuz.classList.add('close');
-      setTimeout(() => {
-        mensagemLuz.style.display = "none";
-        mensagemLuz.classList.remove('close');
-      }, 600);
-    });
-
-    // Fechar modais clicando fora
-    document.addEventListener('click', (e) => {
-      if (e.target === caixaCarta) {
-        closeCarta.click();
+      resizeCanvas(canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
       }
-      if (e.target === mensagemLuz) {
-        closeLuz.click();
+
+      initializeStars() {
+        this.resizeCanvas(this.starsCanvas);
+        this.stars = [];
+        this.meteors = [];
+
+        for (let i = 0; i < 50; i++) {
+          this.stars.push(this.createStar());
+        }
+
+        setInterval(() => {
+          if (Math.random() < 0.1 && this.meteors.length < 3) {
+            this.meteors.push(this.createMeteor());
+          }
+        }, 2000);
+
+        this.animateStars();
       }
-    });
 
-    // Efeitos de teclado
-    document.addEventListener('keydown', (e) => {
-      switch(e.key) {
-        case 'Escape':
-          if (caixaCarta.style.display === 'block') closeCarta.click();
-          if (mensagemLuz.style.display === 'block') closeLuz.click();
-          break;
-        case ' ':
-          e.preventDefault();
-          btnPause.click();
-          break;
-        case 'm':
-        case 'M':
-          btnAudio.click();
-          break;
-        case 'f':
-        case 'F':
-          btnFullscreen.click();
-          break;
-        case 'l':
-        case 'L':
-          btnLuz.click();
-          break;
+      createStar() {
+        return {
+          x: Math.random() * this.starsCanvas.width,
+          y: Math.random() * this.starsCanvas.height * 0.6,
+          vx: -0.5 - Math.random() * 1,
+          vy: 0.5 + Math.random() * 1,
+          size: 1 + Math.random() * 2,
+          brightness: 0.3 + Math.random() * 0.7,
+          twinkle: Math.random() * Math.PI * 2
+        };
       }
-    });
 
-    // Efeitos de toque em dispositivos móveis
-    let touchStartTime = 0;
-    
-    document.addEventListener('touchstart', (e) => {
-      touchStartTime = Date.now();
-    });
+      createMeteor() {
+        return {
+          x: Math.random() * this.starsCanvas.width,
+          y: 0,
+          vx: -2 - Math.random() * 3,
+          vy: 1 + Math.random() * 2,
+          size: 1 + Math.random() * 2,
+          life: 100,
+          trail: []
+        };
+      }
 
-    document.addEventListener('touchend', (e) => {
-      const touchDuration = Date.now() - touchStartTime;
-      
-      // Toque longo cria partículas
-      if (touchDuration > 500) {
-        const touch = e.changedTouches[0];
-        for (let i = 0; i < 10; i++) {
+      animateStars() {
+        this.starsCtx.clearRect(0, 0, this.starsCanvas.width, this.starsCanvas.height);
+        
+        // Desenhar estrelas
+        this.stars.forEach((star, i) => {
+          star.twinkle += 0.05;
+          const brightness = star.brightness * (0.5 + 0.5 * Math.sin(star.twinkle));
+          
+          this.starsCtx.beginPath();
+          this.starsCtx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+          this.starsCtx.fillStyle = `rgba(255, 255, 255, ${brightness})`;
+          this.starsCtx.fill();
+          
+          if (brightness > 0.8) {
+            this.starsCtx.beginPath();
+            this.starsCtx.arc(star.x, star.y, star.size * 2, 0, Math.PI * 2);
+            this.starsCtx.fillStyle = `rgba(255, 255, 255, ${(brightness - 0.8) * 0.3})`;
+            this.starsCtx.fill();
+          }
+          
+          star.x += star.vx;
+          star.y += star.vy;
+          
+          if (star.x < -10 || star.y > this.starsCanvas.height + 10) {
+            this.stars[i] = this.createStar();
+          }
+        });
+        
+        // Desenhar meteoros
+        this.meteors.forEach((meteor, i) => {
+          meteor.trail.push({x: meteor.x, y: meteor.y});
+          if (meteor.trail.length > 10) meteor.trail.shift();
+          
+          meteor.trail.forEach((pos, j) => {
+            const alpha = j / meteor.trail.length * 0.8;
+            this.starsCtx.beginPath();
+            this.starsCtx.arc(pos.x, pos.y, meteor.size * (j / meteor.trail.length), 0, Math.PI * 2);
+            this.starsCtx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+            this.starsCtx.fill();
+          });
+          
+          meteor.x += meteor.vx;
+          meteor.y += meteor.vy;
+          meteor.life--;
+          
+          if (meteor.life <= 0 || meteor.x < -10 || meteor.y > this.starsCanvas.height + 10) {
+            this.meteors.splice(i, 1);
+          }
+        });
+        
+        if (this.isVisible) {
+          requestAnimationFrame(() => this.animateStars());
+        }
+      }
+
+      initializePhrases() {
+        this.phrases = [
+          "Será que alguém está olhando para a mesma lua, neste exato momento?",
+          "Gosto disso... conectados pela luz.",
+          "Às vezes, na escuridão, encontramos a verdadeira luz.",
+          "A distância não diminui a beleza compartilhada.",
+          "Abraçar a família que escolhemos.",
+          "Talvez, um dia, não muito distante... encontraremos a paz.",
+          "Tudo começa com um momento de contemplação.",
+          "A vida não precisa ser perfeita... só precisa ser vivida."
+        ];
+
+        setTimeout(() => this.showPhrase(), 3000);
+      }
+
+      showPhrase() {
+        this.frasesContainer.style.opacity = 0;
+
+        setTimeout(() => {
+          this.frasesContainer.textContent = this.phrases[this.currentPhraseIndex];
+          this.frasesContainer.style.opacity = 1;
+
           setTimeout(() => {
-            criarParticula(touch.clientX, touch.clientY);
-          }, i * 100);
-        }
+            this.frasesContainer.style.opacity = 0;
+            this.currentPhraseIndex++;
+            
+            if (this.currentPhraseIndex < this.phrases.length) {
+              setTimeout(() => this.showPhrase(), 2000);
+            } else {
+              setTimeout(() => {
+                this.currentPhraseIndex = 0;
+                this.showPhrase();
+              }, 10000);
+            }
+          }, 4000);
+        }, 1000);
       }
-    });
 
-    // Detectar orientação em dispositivos móveis
-    function handleOrientationChange() {
-      setTimeout(() => {
-        resizeCanvas();
-        resizeCanvasC();
-      }, 100);
-    }
-
-    window.addEventListener('orientationchange', handleOrientationChange);
-    window.addEventListener('resize', handleOrientationChange);
-
-    // Easter eggs
-    let clickCount = 0;
-    let lastClickTime = 0;
-    
-    lua.addEventListener('click', () => {
-      const now = Date.now();
-      if (now - lastClickTime < 500) {
-        clickCount++;
-        if (clickCount >= 5) {
-          mostrarFrasePersonalizada("Você descobriu um segredo... A lua sempre esteve observando. 🌙");
-          clickCount = 0;
-        }
-      } else {
-        clickCount = 1;
+      showCustomPhrase(phrase) {
+        const temp = this.frasesContainer.textContent;
+        this.frasesContainer.style.opacity = 0;
+        
+        setTimeout(() => {
+          this.frasesContainer.textContent = phrase;
+          this.frasesContainer.style.opacity = 1;
+          
+          setTimeout(() => {
+            this.frasesContainer.style.opacity = 0;
+            setTimeout(() => {
+              this.frasesContainer.textContent = temp;
+              this.frasesContainer.style.opacity = 1;
+            }, 1000);
+          }, 3000);
+        }, 500);
       }
-      lastClickTime = now;
-    });
 
-    // Inicialização do áudio com interação do usuário
-    let audioIniciado = false;
-    
-    function iniciarAudio() {
-      if (!audioIniciado) {
-        audio.play().catch(e => console.log('Áudio será reproduzido após interação'));
-        audioIniciado = true;
-        btnAudio.textContent = "🔊";
-        tocando = true;
+      hideLoading() {
+        setTimeout(() => {
+          this.loading.classList.add('hide');
+          setTimeout(() => {
+            this.loading.style.display = 'none';
+          }, 1000);
+        }, 2000);
       }
     }
 
-    // Tentar iniciar áudio na primeira interação
-    ['click', 'touchstart', 'keydown'].forEach(event => {
-      document.addEventListener(event, iniciarAudio, { once: true });
-    });
-
-    // Salvar configurações
-    function salvarConfiguracao() {
-      try {
-        localStorage.setItem('dexterConfig', JSON.stringify({
-          audioLigado: tocando,
-          ultimaVisita: new Date().toISOString()
-        }));
-      } catch (e) {
-        console.log('Não foi possível salvar configurações');
-      }
+    // Inicializar aplicação quando DOM estiver pronto
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => new ConectadosPelaLuz());
+    } else {
+      new ConectadosPelaLuz();
     }
-
-    // Carregar configurações
-    function carregarConfiguracao() {
-      try {
-        const config = JSON.parse(localStorage.getItem('dexterConfig'));
-        if (config && config.audioLigado && !tocando) {
-          // Não iniciar áudio automaticamente por políticas do navegador
-          // Apenas manter o estado visual
-        }
-      } catch (e) {
-        console.log('Não foi possível carregar configurações');
-      }
-    }
-
-    // Salvar configurações ao sair
-    window.addEventListener('beforeunload', salvarConfiguracao);
-
-    // Carregar configurações na inicialização
-    carregarConfiguracao();
-
-    // Animação de entrada suave
-    document.body.style.opacity = '0';
-    window.addEventListener('load', () => {
-      document.body.style.transition = 'opacity 2s ease-in';
-      document.body.style.opacity = '1';
-    });
-
-    // Otimização de performance
-    let isVisible = true;
-    
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        isVisible = false;
-        // Pausar animações custosas quando a página não está visível
-        if (tocando) {
-          audio.pause();
-        }
-      } else {
-        isVisible = true;
-        // Retomar animações
-        if (tocando) {
-          audio.play().catch(e => console.log('Erro ao retomar áudio'));
-        }
-      }
-    });
-
-    console.log('🌙 Conectados pela Luz - Dexter Enhanced');
-    console.log('⌨️  Atalhos de teclado:');
-    console.log('   Espaço: Pausar/Continuar');
-    console.log('   M: Áudio On/Off');
-    console.log('   F: Tela cheia');
-    console.log('   L: Enviar luz');
-    console.log('   ESC: Fechar modais');
   </script>
 </body>
 </html>
