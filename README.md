@@ -1,12 +1,10 @@
 <h1 align="center">Olá 👋, eu sou o Alírio Neto</h1>
 <h3 align="center">Desenvolvedor Web no celular 📱💻</h3>
 
-<img align="right" src="https://i.imgur.com/CGIoFeK.png" width="200"/>
-
 - 🔭 Atualmente trabalhando no projeto **Fento App**
 - 🌱 Aprendendo **Java, HTML, CSS, JS e UI/UX**
 - 💬 Me pergunte sobre **desenvolvimento no celular**
-- 📫 Contato: **alirio@email.com**
+- 📫 Contato: **frontendnocelular@gmaiil.com**
 - ⚡ Curiosidade: **Eu programo só com o celular!**
 
 ---
